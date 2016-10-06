@@ -2,7 +2,7 @@
 
 仿制 Chrome 的离线恐龙游戏实现的 React 组件。
 
-![demo]("./demo.png")
+![demo](./demo.png)
 
 ## Usage
 
