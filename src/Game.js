@@ -18,7 +18,6 @@ export default class Game extends React.Component {
   constructor(props) {
     super(props);
 
-
     let imageLoadCount = 0;
     let onImageLoaded = () => {
       ++imageLoadCount;
@@ -59,7 +58,7 @@ export default class Game extends React.Component {
       skyOffset: 0,
       groundOffset: 0,
       ...this.props.options
-  };
+    };
 
     this.status = STATUS.STOP;
     this.timer = null;
@@ -140,7 +139,7 @@ export default class Game extends React.Component {
     this.options.groundOffset = this.options.groundOffset < width
       ? (this.options.groundOffset + groundSpeed)
       : (this.options.groundOffset - width);
-    ctx.translate(this.options.skyOffset-this.options.groundOffset, 0);
+    ctx.translate(this.options.skyOffset - this.options.groundOffset, 0);
     ctx.drawImage(this.options.groundImage, 0, 76);
     ctx.drawImage(this.options.groundImage, this.options.groundImage.width, 76);
 
@@ -254,56 +253,56 @@ export default class Game extends React.Component {
   }
 
   start = () => {
-  if (this.status === STATUS.START) {
-  return;
-}
+    if (this.status === STATUS.START) {
+      return;
+    }
 
-this.status = STATUS.START;
-this.__setTimer();
-this.jump();
-};
-
-pause = () => {
-  if (this.status === STATUS.START) {
-    this.status = STATUS.PAUSE;
-    this.__clearTimer();
-  }
-};
-
-goOn = () => {
-  if (this.status === STATUS.PAUSE) {
     this.status = STATUS.START;
     this.__setTimer();
+    this.jump();
+  };
+
+  pause = () => {
+    if (this.status === STATUS.START) {
+      this.status = STATUS.PAUSE;
+      this.__clearTimer();
+    }
+  };
+
+  goOn = () => {
+    if (this.status === STATUS.PAUSE) {
+      this.status = STATUS.START;
+      this.__setTimer();
+    }
+  };
+
+  stop = () => {
+    if (this.status === STATUS.OVER) {
+      return;
+    }
+    this.status = STATUS.OVER;
+    this.playerStatus = 3;
+    this.__clearTimer();
+    this.__draw();
+    this.__clear();
+  };
+
+  restart = () => {
+    this.obstacles = this.__obstaclesGenerate();
+    this.start();
+  };
+
+  jump = () => {
+    if (this.jumpHeight > 2) {
+      return;
+    }
+    this.jumpDelta = JUMP_DELTA;
+    this.jumpHeight = JUMP_DELTA;
+  };
+
+  render() {
+    return (
+      <canvas id="canvas" ref={ref => this.canvas = ref} height={160} width={340} />
+    );
   }
-};
-
-stop = () => {
-  if (this.status === STATUS.OVER) {
-    return;
-  }
-  this.status = STATUS.OVER;
-  this.playerStatus = 3;
-  this.__clearTimer();
-  this.__draw();
-  this.__clear();
-};
-
-restart = () => {
-  this.obstacles = this.__obstaclesGenerate();
-  this.start();
-};
-
-jump = () => {
-  if (this.jumpHeight > 2) {
-    return;
-  }
-  this.jumpDelta = JUMP_DELTA;
-  this.jumpHeight = JUMP_DELTA;
-};
-
-render() {
-  return (
-    <canvas id="canvas" ref={ref => this.canvas = ref} height={160} width={340} />
-);
-}
 };
