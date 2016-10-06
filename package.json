@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "chrome dinosaur game",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LzxHahaha/react-dinosaur-game"
+  },
   "scripts": {
     "build": "babel -d dist/ src/"
   },
